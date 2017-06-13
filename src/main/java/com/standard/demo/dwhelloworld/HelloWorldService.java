@@ -1,6 +1,7 @@
 package com.standard.demo.dwhelloworld;
 
 import com.palantir.config.crypto.EncryptedConfigValueBundle;
+import com.standard.demo.dwhelloworld.resources.HelloWorldResource;
 import com.standard.demo.dwhelloworld.resources.VersionResource;
 import com.standard.util.rs.audit.RequestAuditLogFeature;
 
@@ -77,6 +78,9 @@ public class HelloWorldService extends Application<HelloWorldServiceConfiguratio
 
     // Version resource
     environment.jersey().register(new VersionResource());
+
+    // HelloWorld resource
+    environment.jersey().register(new HelloWorldResource(configuration.getGreeting()));
 
   }
 }

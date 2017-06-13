@@ -10,15 +10,7 @@ server:
   requestLog:
     type: classic
     timeZone: UTC
-    appenders:
-      - type: console
-      - type: file
-        # same as logging.appenders.currentLogFilename
-        currentLogFilename: ./logs/dropwizard-hello-world-request.log
-        archive: true
-        archivedLogFilenamePattern: ./logs/dropwizard-hello-world-request-%d.log.gz
-        archivedFileCount: 5
-        timeZone: UTC
+    appenders: []
 
 
 #
@@ -27,7 +19,7 @@ server:
 logging:
 
   # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
-  level: INFO
+  level: OFF
 
   appenders:
     - type: console
