@@ -1,0 +1,57 @@
+server:
+  applicationConnectors:
+    - type: https
+      port: 9009
+      keyStorePath: /var/apps/shared/keystores/identity/keystore.jks
+      keyStorePassword: ${enc:hsZT0C2OBHfdJCnPQ/qP82+HJ5BDvwapQtXVg3yL8wapLb2+L4JdcByJ13WvAYvxygWSTSjlOg==}
+      keyStoreType: JKS
+      keyStoreProvider: SUN
+      trustStoreType: JKS
+      trustStorePath: /var/apps/shared/keystores/truststore/truststore.jks
+      trustStorePassword: ${enc:pDPiWwczXgvETcO+FACf/FFofZrq704Lj2d10BPNQikoms+R5ffXpWkfOZVqV3bOUuK3Xwo0}
+      trustStoreType: JKS
+      trustStoreProvider: SUN
+      validateCerts: false
+      validatePeers: false
+      supportedProtocols: [SSLv2Hello, TLSv1, TLSv1.1, TLSv1.2]
+      excludedProtocols: [SSLv3]
+      needClientAuth: false
+      wantClientAuth: false
+  adminConnectors:
+    - type: http
+      port: 10009
+  requestLog:
+    type: classic
+    timeZone: UTC
+    appenders:
+      - type: console
+      - type: file
+        # same as logging.appenders.currentLogFilename
+        currentLogFilename: /apps/logs/SIC/dropwizard-hello-world/pdxlmicni001/dropwizard-hello-world-request.log
+        archive: true
+        archivedLogFilenamePattern: /apps/logs/SIC/dropwizard-hello-world/pdxlmicni001/dropwizard-hello-world-request-%d.log.gz
+        archivedFileCount: 5
+        timeZone: UTC
+
+
+#
+## Logging settings
+#
+logging:
+
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: INFO
+
+  appenders:
+    - type: console
+      threshold: INFO
+      target: stderr
+
+    - type: file
+      threshold: INFO
+      logFormat: "%-6level [%d{ISO8601}] [%t] %logger{5} - %X{code} %msg %n"
+      currentLogFilename: /apps/logs/SIC/dropwizard-hello-world/pdxlmicni001/dropwizard-hello-world.log
+      archive: true
+      archivedLogFilenamePattern: /apps/logs/SIC/dropwizard-hello-world/pdxlmicni001/dropwizard-hello-world-%d.log.gz
+      archivedFileCount: 5
+      timeZone: UTC
