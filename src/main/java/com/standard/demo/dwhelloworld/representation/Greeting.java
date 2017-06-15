@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Greeting {
 
   private String message;
+  private String username;
+  private Integer numberOfLogins;
 
   public Greeting() {
     // Jackson deserialization
@@ -26,5 +28,25 @@ public class Greeting {
   @JsonProperty
   public void setMessage(String message) {
     this.message = message;
+  }
+
+  @JsonProperty
+  public String getUsername() {
+    return username;
+  }
+
+  @JsonProperty
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  @JsonProperty
+  public Integer getNumberOfLogins() {
+    return numberOfLogins;
+  }
+
+  @JsonProperty
+  public void setNumberOfLogins(Integer numberOfLogins) {
+    this.numberOfLogins = numberOfLogins;
   }
 }

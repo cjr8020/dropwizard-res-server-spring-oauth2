@@ -34,6 +34,31 @@ server:
         timeZone: UTC
 
 
+database:
+  driverClass: org.h2.Driver
+  user: sa
+  password:
+  url: jdbc:h2:mem:DEMO_DB;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;
+  properties:
+    charSet: UTF-8
+  maxWaitForConnection: 1s
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  minSize: 8
+  maxSize: 32
+  checkConnectionWhileIdle: false
+  evictionInterval: 10s
+  minIdleTime: 1 minute
+
+
+#
+## WebSEAL credentials to authenticate incoming requests against
+#
+auth:
+  systemUserName: intUSR_PNA
+  systemUserPassword: ${enc:MoaElN0gLxLMOJrB6VkLTGx+IzAoaUscQr18EkcKyFQVnEJ0afIfgleUvjiNmhYcP91n35PZHS+f}
+
+
+
 #
 ## Logging settings
 #

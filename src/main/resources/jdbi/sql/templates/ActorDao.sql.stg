@@ -1,0 +1,65 @@
+group ActorDao;
+
+create() ::= <<
+INSERT INTO DEMO.ACTOR (
+  ACTOR_ID,
+  USERNAME,
+  NUMBER_OF_LOGINS,
+  RECORD_VERSION,
+  CREATED_BY,
+  CREATED_TIMESTAMP
+) VALUES (
+  :actorId,
+  :username,
+  :numberOfLogins,
+  :recordVersion,
+  :createdBy,
+  :createdTimestamp
+)
+>>
+
+update() ::= <<
+UPDATE
+  DEMO.ACTOR
+SET
+  ACTOR_ID              = :actorId,
+  USERNAME              = :username,
+  NUMBER_OF_LOGINS      = :numberOfLogins,
+  RECORD_VERSION        = (:recordVersion + 1),
+  UPDATED_BY            = :updatedBy,
+  UPDATED_TIMESTAMP     = :updatedTimestamp
+WHERE
+  ACTOR_ID = :actorId
+>>
+
+read() ::= <<
+SELECT
+  ACTOR_ID,
+  USERNAME,
+  NUMBER_OF_LOGINS,
+  RECORD_VERSION,
+  CREATED_BY,
+  CREATED_TIMESTAMP,
+  UPDATED_BY,
+  UPDATED_TIMESTAMP
+FROM
+  DEMO.ACTOR
+WHERE
+  ACTOR_ID = :actorId
+>>
+
+readByUsername() ::= <<
+SELECT
+  ACTOR_ID,
+  USERNAME,
+  NUMBER_OF_LOGINS,
+  RECORD_VERSION,
+  CREATED_BY,
+  CREATED_TIMESTAMP,
+  UPDATED_BY,
+  UPDATED_TIMESTAMP
+FROM
+  DEMO.ACTOR
+WHERE
+  USERNAME = :username
+>>

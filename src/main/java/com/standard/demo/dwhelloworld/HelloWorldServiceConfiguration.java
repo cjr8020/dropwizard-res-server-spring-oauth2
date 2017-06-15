@@ -3,10 +3,15 @@ package com.standard.demo.dwhelloworld;
 import com.google.common.base.MoreObjects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.standard.demo.dwhelloworld.config.AuthConfiguration;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import io.dropwizard.Configuration;
+import io.dropwizard.db.DataSourceFactory;
 
 /**
  * Service configuration class.
@@ -25,6 +30,24 @@ class HelloWorldServiceConfiguration extends Configuration {
   @JsonProperty
   public void setGreeting(String greeting) {
     this.greeting = greeting;
+  }
+
+  @Valid
+  @NotNull
+  @JsonProperty("database")
+  private DataSourceFactory database = new DataSourceFactory();
+
+  public DataSourceFactory getDataSourceFactory() {
+    return database;
+  }
+
+  @Valid
+  @NotNull
+  @JsonProperty("auth")
+  private AuthConfiguration auth;
+
+  public AuthConfiguration getAuthConfiguration() {
+    return auth;
   }
 
   @Override
