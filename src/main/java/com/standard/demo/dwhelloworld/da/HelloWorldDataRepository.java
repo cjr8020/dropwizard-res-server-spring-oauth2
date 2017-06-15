@@ -43,9 +43,10 @@ public class HelloWorldDataRepository {
             username,
             executionContext.getActor(),
             LocalDateTime.now());
+        actor.incrementNumberOfResourcesRequested(); // reflect this login
         actorDao.create(actor);
       } else {
-        actor.incrementNumberOfLogins();
+        actor.incrementNumberOfResourcesRequested();
         actor.setUpdatedBy(executionContext.getActor());
         actor.setUpdatedTimestamp(LocalDateTime.now());
         int recordsUpdated = actorDao.update(actor); // note: recordVer is updated automatically by the update implementation

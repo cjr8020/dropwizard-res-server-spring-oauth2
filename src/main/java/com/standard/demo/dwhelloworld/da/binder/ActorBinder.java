@@ -17,7 +17,7 @@ public class ActorBinder<T extends Actor> implements Binder<Bind, T> {
 
     sqlStatement.bind("actorId", entity.getId());
     sqlStatement.bind("username", entity.getUsername());
-    sqlStatement.bind("numberOfLogins", entity.getNumberOfLogins());
+    sqlStatement.bind("resourcesRequested", entity.getResourcesRequested());
 
     sqlStatement.bind("recordVersion", entity.getRecordVersion());
 

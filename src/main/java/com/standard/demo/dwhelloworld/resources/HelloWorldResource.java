@@ -66,7 +66,7 @@ public class HelloWorldResource {
       ExecutionContext executionContext = createAndValidateExecutionContext(transactionId, ivUser);
       HelloWorldDataRepository dataRepository = new HelloWorldDataRepository(demoDbDbi, executionContext);
       Actor actor = dataRepository.updateActorDetails(ivUser);
-      Greeting greeting = new Greeting(greetingMessage, actor.getUsername(), actor.getNumberOfLogins());
+      Greeting greeting = new Greeting(greetingMessage, actor.getUsername(), actor.getResourcesRequested());
       GenericEntity<Greeting> responseEntity = new GenericEntity<Greeting>(greeting) {};
       response = Response.ok(responseEntity).build();
     } catch (Throwable throwable) {
@@ -104,7 +104,7 @@ public class HelloWorldResource {
       ExecutionContext executionContext = createAndValidateExecutionContext(transactionId, ivUser);
       HelloWorldDataRepository dataRepository = new HelloWorldDataRepository(demoDbDbi, executionContext);
       Actor actor = dataRepository.updateActorDetails(ivUser);
-      Greeting greeting = new Greeting(greetingMessage.toUpperCase(), actor.getUsername(), actor.getNumberOfLogins());
+      Greeting greeting = new Greeting(greetingMessage.toUpperCase(), actor.getUsername(), actor.getResourcesRequested());
       GenericEntity<Greeting> responseEntity = new GenericEntity<Greeting>(greeting) {};
       response = Response.ok(responseEntity).build();
     } catch (Throwable throwable) {

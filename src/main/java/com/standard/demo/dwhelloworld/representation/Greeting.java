@@ -9,7 +9,7 @@ public class Greeting {
 
   private String message;
   private String username;
-  private Integer numberOfLogins;
+  private Integer resourceRequests;
 
   public Greeting() {
     // Jackson deserialization
@@ -19,10 +19,10 @@ public class Greeting {
     this.message = message;
   }
 
-  public Greeting(final String message, final String username, final Integer numberOfLogins) {
+  public Greeting(final String message, final String username, final Integer resourceRequests) {
     this.message = message;
     this.username = username;
-    this.numberOfLogins = numberOfLogins;
+    this.resourceRequests = resourceRequests;
   }
 
   @JsonProperty
@@ -46,12 +46,12 @@ public class Greeting {
   }
 
   @JsonProperty
-  public Integer getNumberOfLogins() {
-    return numberOfLogins;
+  public Integer getResourceRequests() {
+    return resourceRequests;
   }
 
   @JsonProperty
-  public void setNumberOfLogins(Integer numberOfLogins) {
-    this.numberOfLogins = numberOfLogins;
+  public void setResourceRequests(Integer resourceRequests) {
+    this.resourceRequests = resourceRequests;
   }
 }

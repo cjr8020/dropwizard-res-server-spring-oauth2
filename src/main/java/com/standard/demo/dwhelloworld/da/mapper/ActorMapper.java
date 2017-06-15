@@ -20,7 +20,7 @@ public class ActorMapper implements ResultSetMapper<Actor> {
 
     actor.setId(resultSet.getLong("ACTOR_ID"));
     actor.setUsername(resultSet.getString("USERNAME"));
-    actor.setNumberOfLogins(resultSet.getInt("NUMBER_OF_LOGINS"));
+    actor.setResourcesRequested(resultSet.getInt("RESOURCES_REQUESTED"));
 
     actor.setRecordVersion(resultSet.getInt("RECORD_VERSION"));
 

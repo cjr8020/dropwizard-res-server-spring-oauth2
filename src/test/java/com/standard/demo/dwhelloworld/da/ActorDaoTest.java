@@ -47,7 +47,7 @@ public class ActorDaoTest extends BasePersistenceTest {
     assertNotNull(actor);
 
     assertThat(actor.getUsername(), equalTo(username));
-    assertThat(actor.getNumberOfLogins(), equalTo(0));
+    assertThat(actor.getResourcesRequested(), equalTo(0));
     assertThat(actor.getRecordVersion(), equalTo(0));
   }
 
@@ -61,7 +61,7 @@ public class ActorDaoTest extends BasePersistenceTest {
     assertNotNull(actor);
 
     assertThat(actor.getUsername(), equalTo(username));
-    assertThat(actor.getNumberOfLogins(), equalTo(0));
+    assertThat(actor.getResourcesRequested(), equalTo(0));
     assertThat(actor.getRecordVersion(), equalTo(0));
   }
 
@@ -94,7 +94,7 @@ public class ActorDaoTest extends BasePersistenceTest {
     Actor persistedActor = dao.read(actorId);
     assertNotNull(persistedActor);
     assertThat(persistedActor.getUsername(), equalTo("chewbacca"));
-    assertThat(persistedActor.getNumberOfLogins(), equalTo(0));
+    assertThat(persistedActor.getResourcesRequested(), equalTo(0));
     assertThat(persistedActor.getRecordVersion(), equalTo(0));
   }
 
@@ -109,10 +109,10 @@ public class ActorDaoTest extends BasePersistenceTest {
     assertNotNull(actor);
 
     assertThat(actor.getUsername(), equalTo(username));
-    assertThat(actor.getNumberOfLogins(), equalTo(0));
+    assertThat(actor.getResourcesRequested(), equalTo(0));
     assertThat(actor.getRecordVersion(), equalTo(0)); // rec ver = 0
 
-    actor.setNumberOfLogins(1);
+    actor.setResourcesRequested(1);
     actor.setUpdatedBy("testUpdate test");
     actor.setUpdatedTimestamp(LocalDateTime.now());
 
@@ -123,7 +123,7 @@ public class ActorDaoTest extends BasePersistenceTest {
 
     assertThat(updatedActor.getId(), equalTo(1L));
     assertThat(updatedActor.getUsername(), equalTo(username));
-    assertThat(updatedActor.getNumberOfLogins(), equalTo(1));
+    assertThat(updatedActor.getResourcesRequested(), equalTo(1));
     assertThat(updatedActor.getRecordVersion(), equalTo(1)); // rec ver = 1
 
   }

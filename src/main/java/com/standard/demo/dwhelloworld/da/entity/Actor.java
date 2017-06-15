@@ -11,7 +11,7 @@ public class Actor {
 
   private Long id;
   private String username;
-  private Integer numberOfLogins = 0;
+  private Integer resourcesRequested = 0;
 
   // audit columns
   private Integer recordVersion = 0;
@@ -47,16 +47,16 @@ public class Actor {
     this.username = username;
   }
 
-  public Integer getNumberOfLogins() {
-    return numberOfLogins;
+  public Integer getResourcesRequested() {
+    return resourcesRequested;
   }
 
-  public void setNumberOfLogins(Integer numberOfLogins) {
-    this.numberOfLogins = numberOfLogins;
+  public void setResourcesRequested(Integer resourcesRequested) {
+    this.resourcesRequested = resourcesRequested;
   }
 
-  public void incrementNumberOfLogins() {
-    ++this.numberOfLogins;
+  public void incrementNumberOfResourcesRequested() {
+    ++this.resourcesRequested;
   }
 
   public Integer getRecordVersion() {
@@ -104,7 +104,7 @@ public class Actor {
     return MoreObjects.toStringHelper(this)
         .add("id", id)
         .add("username", username)
-        .add("numberOfLogins", numberOfLogins)
+        .add("resourcesRequested", resourcesRequested)
         .add("recordVersion", recordVersion)
         .add("createdBy", createdBy)
         .add("createdTimestamp", createdTimestamp)
