@@ -10,9 +10,10 @@ import org.skife.jdbi.v2.Handle;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 /**
  * test cases for ActorDao
@@ -49,6 +50,32 @@ public class ActorDaoTest extends BasePersistenceTest {
     assertThat(actor.getNumberOfLogins(), equalTo(0));
     assertThat(actor.getRecordVersion(), equalTo(0));
   }
+
+  @Test
+  public void testReadByUserid_existingUser() {
+    dao = handle.attach(ActorDao.class);
+
+    final String username = "jsmith";
+
+    Actor actor = dao.readByUsername(username);
+    assertNotNull(actor);
+
+    assertThat(actor.getUsername(), equalTo(username));
+    assertThat(actor.getNumberOfLogins(), equalTo(0));
+    assertThat(actor.getRecordVersion(), equalTo(0));
+  }
+
+
+  @Test
+  public void testReadByUserid_nonExistingUser() {
+    dao = handle.attach(ActorDao.class);
+
+    final String username = "yabadabadoo";
+
+    Actor actor = dao.readByUsername(username);
+    assertNull(actor);
+  }
+
 
   @Test
   public void testCreate() {

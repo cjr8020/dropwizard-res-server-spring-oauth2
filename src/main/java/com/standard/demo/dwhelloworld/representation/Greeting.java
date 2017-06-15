@@ -15,9 +15,14 @@ public class Greeting {
     // Jackson deserialization
   }
 
-
   public Greeting(final String message) {
     this.message = message;
+  }
+
+  public Greeting(final String message, final String username, final Integer numberOfLogins) {
+    this.message = message;
+    this.username = username;
+    this.numberOfLogins = numberOfLogins;
   }
 
   @JsonProperty

@@ -55,6 +55,10 @@ public class Actor {
     this.numberOfLogins = numberOfLogins;
   }
 
+  public void incrementNumberOfLogins() {
+    ++this.numberOfLogins;
+  }
+
   public Integer getRecordVersion() {
     return recordVersion;
   }

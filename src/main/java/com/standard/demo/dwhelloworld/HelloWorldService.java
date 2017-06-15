@@ -1,11 +1,13 @@
 package com.standard.demo.dwhelloworld;
 
 import com.palantir.config.crypto.EncryptedConfigValueBundle;
+import com.standard.demo.dwhelloworld.da.ActorDao;
 import com.standard.demo.dwhelloworld.resources.HelloWorldResource;
 import com.standard.demo.dwhelloworld.resources.VersionResource;
 import com.standard.util.rs.audit.RequestAuditLogFeature;
 
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 
 import io.dropwizard.Application;
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -72,6 +75,16 @@ public class HelloWorldService extends Application<HelloWorldServiceConfiguratio
     // add URL mapping
     cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 
+
+    /*
+     * JDBI for persistence
+     * This will automatically create
+     *  - managed connection pool to the database
+     *  - a healthcheck for connectivity to the database
+     */
+    final DBIFactory dwxFactory = new DBIFactory();
+    final DBI demoDbDbi = dwxFactory.build(environment, configuration.getDataSourceFactory(), "DEMO_DB");
+
     /* **************************
      * Register REST resources
      ***************************/
@@ -80,7 +93,7 @@ public class HelloWorldService extends Application<HelloWorldServiceConfiguratio
     environment.jersey().register(new VersionResource());
 
     // HelloWorld resource
-    environment.jersey().register(new HelloWorldResource(configuration.getGreeting()));
+    environment.jersey().register(new HelloWorldResource(configuration.getGreeting(), demoDbDbi));
 
   }
 }
