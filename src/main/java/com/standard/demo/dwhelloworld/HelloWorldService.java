@@ -1,6 +1,8 @@
 package com.standard.demo.dwhelloworld;
 
 import com.palantir.config.crypto.EncryptedConfigValueBundle;
+import com.standard.demo.dwhelloworld.auth.AuthenticatedUser;
+import com.standard.demo.dwhelloworld.auth.SystemUserAuthenticator;
 import com.standard.demo.dwhelloworld.da.ActorDao;
 import com.standard.demo.dwhelloworld.resources.HelloWorldResource;
 import com.standard.demo.dwhelloworld.resources.VersionResource;
@@ -17,6 +19,8 @@ import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 
 import io.dropwizard.Application;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -74,6 +78,19 @@ public class HelloWorldService extends Application<HelloWorldServiceConfiguratio
     cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "OPTIONS,GET,PUT,POST,DELETE,HEAD");
     // add URL mapping
     cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+
+
+    /*
+     * SystemUserAuthenticator to enable authentication on protected resources in order to
+     * validate that the request indeed is being forwarded by the reverse proxy (WebSEAL)
+     */
+    SystemUserAuthenticator authenticator = new SystemUserAuthenticator(
+        configuration.getAuthConfiguration().getSystemUserName(),
+        configuration.getAuthConfiguration().getSystemUserSecret());
+    environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<AuthenticatedUser>()
+        .setAuthenticator(authenticator)
+        .setRealm(getName())
+        .buildAuthFilter()));
 
 
     /*

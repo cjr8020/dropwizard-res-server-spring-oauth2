@@ -120,7 +120,7 @@ public class HelloWorldResource {
     response.getHeaders().add(CUSTOM_HTTP_HEADER_ACTOR_ID, ivUser);
 
     sw.stop();
-    log.info("transactionId={}, actor={}, operation=sayHello completed in {}ms, status {}",
+    log.info("transactionId={}, actor={}, operation=sayHelloInCaps completed in {}ms, status {}",
         transactionId, ivUser, sw.elapsed(TimeUnit.MILLISECONDS), response.getStatus());
     return response;
   }
