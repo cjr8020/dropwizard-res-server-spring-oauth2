@@ -6,6 +6,8 @@ import org.skife.jdbi.v2.SQLStatement;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.Binder;
 
+import java.sql.Timestamp;
+
 /**
  * Binders bind entity fields to sql statements
  */
@@ -23,10 +25,10 @@ public class ActorBinder<T extends Actor> implements Binder<Bind, T> {
 
     if (transactionType.equalsIgnoreCase("create")) {
       sqlStatement.bind("createdBy", entity.getCreatedBy());
-      sqlStatement.bind("createdTimestamp", entity.getCreatedTimestamp());
+      sqlStatement.bind("createdTimestamp", Timestamp.valueOf(entity.getCreatedTimestamp()));
     } else if (transactionType.equalsIgnoreCase("update")) {
       sqlStatement.bind("updatedBy", entity.getUpdatedBy());
-      sqlStatement.bind("updatedTimestamp", entity.getUpdatedTimestamp());
+      sqlStatement.bind("updatedTimestamp", Timestamp.valueOf(entity.getUpdatedTimestamp()));
     } else {
       throw new RuntimeException("unknown transaction type: " + transactionType);
     }

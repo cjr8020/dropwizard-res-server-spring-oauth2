@@ -21,7 +21,7 @@ server:
     - type: http
       port: 10009
   requestLog:
-    type: classic
+    # type: classic
     timeZone: UTC
     appenders:
       - type: console

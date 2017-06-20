@@ -1,6 +1,6 @@
 # dropwizard-hello-world
 
-sample Dropwizard-based REST service supporting deployment and infrastructure services testing
+sample Dropwizard v.0.9.2 (our current level) based REST service supporting deployment and infrastructure services testing
 
 The service demonstrates the following aspects:
 
@@ -29,7 +29,7 @@ web-user-context-parent
 
 The service endpoint is fronted by a WebSEAL reverse proxy.
 
-Use any existing test account to access these resources.
+Use any existing TAM LDAP test account to access these resources.
 
 
 

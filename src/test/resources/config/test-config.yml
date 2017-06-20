@@ -8,7 +8,7 @@ server:
       port: 65001
       bindHost: 127.0.0.1
   requestLog:
-    type: classic
+    # type: classic
     timeZone: UTC
     appenders:
       - type: console
