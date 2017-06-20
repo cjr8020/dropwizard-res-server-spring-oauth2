@@ -11,7 +11,7 @@ The service demonstrates the following aspects:
 1. database backend with an exposed health check
 1. Basic Authentication
 
-*Note*: this application is very simple and does **not** represent the organization of a typical software application project structure like this:
+*Note*: this application is very simple and does **not** represent the organization of a typical software application project structure that would look more like this:
 
 ```
 web-user-context-parent
