@@ -7,6 +7,7 @@ import com.standard.demo.dwhelloworld.context.ExecutionContext;
 import com.standard.demo.dwhelloworld.da.HelloWorldDataRepository;
 import com.standard.demo.dwhelloworld.da.entity.Actor;
 import com.standard.demo.dwhelloworld.representation.Greeting;
+import com.standard.security.encoding.InputEncoder;
 import com.standard.util.rs.audit.Audited;
 
 import org.skife.jdbi.v2.DBI;
@@ -59,6 +60,13 @@ public class HelloWorldResource {
       @HeaderParam("iv-remote-address") String actorRemoteAddress
   ) {
 
+    // sanitize input
+    transactionId = InputEncoder.encodeForLogging(transactionId);
+    ivUser = InputEncoder.encodeForLogging(ivUser);
+    ivGroups = InputEncoder.encodeForLogging(ivGroups);
+    actorRemoteAddress = InputEncoder.encodeForLogging(actorRemoteAddress);
+
+
     final Stopwatch sw = Stopwatch.createStarted();
     Response response;
 
@@ -97,6 +105,13 @@ public class HelloWorldResource {
       @HeaderParam("iv-groups") String ivGroups,
       @HeaderParam("iv-remote-address") String actorRemoteAddress
   ) {
+
+    // sanitize input
+    transactionId = InputEncoder.encodeForLogging(transactionId);
+    ivUser = InputEncoder.encodeForLogging(ivUser);
+    ivGroups = InputEncoder.encodeForLogging(ivGroups);
+    actorRemoteAddress = InputEncoder.encodeForLogging(actorRemoteAddress);
+
     final Stopwatch sw = Stopwatch.createStarted();
     Response response;
 

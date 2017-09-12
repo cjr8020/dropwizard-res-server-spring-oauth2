@@ -44,8 +44,8 @@
         <checkstyle.file.url>http://jenkins-ci.standard.com/ci/checkstyle/standard-checkstyle.xml</checkstyle.file.url>
         <findbugs-maven-plugin.version>3.0.0</findbugs-maven-plugin.version>
 
-        <!-- runtime dependency versions --> 
-
+        <!-- runtime dependency versions -->
+        <sfg-security.version>1.0.0</sfg-security.version>
 
         <!-- dw v0.9.2 -->
         <dropwizard.version>0.9.2</dropwizard.version>
@@ -105,6 +105,38 @@
             <version>${stringtemplate.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.standard.security</groupId>
+            <artifactId>sfg-security</artifactId>
+            <version>${sfg-security.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis-ext</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-beanutils</groupId>
+                    <artifactId>commons-beanutils</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-beanutils</groupId>
+                    <artifactId>commons-beanutils-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-collections</groupId>
+                    <artifactId>commons-collections</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- dw 0.9.2 dependencies -->
         <dependency>
             <groupId>com.palantir.config.crypto</groupId>
@@ -117,6 +149,8 @@
             <artifactId>jaxrs-jersey2-dw-util</artifactId>
             <version>${jaxrs-jersey2-dw-util.version}</version>
         </dependency>
+
+
 
         <!-- dw v1.1.1 dependencies
         <dependency>
