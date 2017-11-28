@@ -28,10 +28,6 @@ database:
   minIdleTime: 1 minute
 
 
-auth:
-  systemUserName: systemUser
-  systemUserPassword: secret
-
 
 #
 ## Logging settings

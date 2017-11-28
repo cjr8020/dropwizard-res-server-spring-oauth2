@@ -1,12 +1,10 @@
 server:
   applicationConnectors:
     - type: http
-      port: 65000
-      bindHost: 127.0.0.1
+      port: 9009
   adminConnectors:
     - type: http
-      port: 65001
-      bindHost: 127.0.0.1
+      port: 10009
   requestLog:
     # type: classic
     timeZone: UTC
@@ -14,9 +12,9 @@ server:
       - type: console
       - type: file
         # same as logging.appenders.currentLogFilename
-        currentLogFilename: ./logs/dropwizard-hello-world-request.log
+        currentLogFilename: ./logs/dropwizard-hello-world.log
         archive: true
-        archivedLogFilenamePattern: ./logs/dropwizard-hello-world-request-%d.log.gz
+        archivedLogFilenamePattern: ./logs/dropwizard-hello-world-%d.log.gz
         archivedFileCount: 5
         timeZone: UTC
 
@@ -25,7 +23,7 @@ database:
   driverClass: org.h2.Driver
   user: sa
   password:
-  url: jdbc:h2:mem:DEMO_DB;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;
+  url: jdbc:h2:file:./db/DEMO_DB;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE
   properties:
     charSet: UTF-8
   maxWaitForConnection: 1s
@@ -35,6 +33,8 @@ database:
   checkConnectionWhileIdle: false
   evictionInterval: 10s
   minIdleTime: 1 minute
+
+
 
 
 #
@@ -47,13 +47,13 @@ logging:
 
   appenders:
     - type: console
-      threshold: ALL
+      threshold: INFO
       target: stderr
 
     - type: file
-      threshold: ALL
-      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %X{code} %msg %n"
+      threshold: INFO
+      logFormat: "%-6level [%d{ISO8601}] [%t] %logger{5} - %X{code} %msg %n"
       currentLogFilename: ./logs/dropwizard-hello-world.log
       archivedLogFilenamePattern: ./logs/dropwizard-hello-world-%d.log.gz
+      archive: true
       archivedFileCount: 5
-      timeZone: UTC
