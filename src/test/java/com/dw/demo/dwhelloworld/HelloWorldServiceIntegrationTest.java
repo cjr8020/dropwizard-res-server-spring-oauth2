@@ -1,23 +1,19 @@
 package com.dw.demo.dwhelloworld;
 
-import com.standard.dev.test.base.BaseTest;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
+import io.dropwizard.testing.ResourceHelpers;
+import io.dropwizard.testing.junit.DropwizardAppRule;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.Response;
-
-import io.dropwizard.testing.ResourceHelpers;
-import io.dropwizard.testing.junit.DropwizardAppRule;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
 
 /**
  * This service integration test exercises the REST endpoints. It creates an DW service instance and
@@ -26,7 +22,7 @@ import static org.junit.Assert.assertThat;
  * NOTE: some test cases rely on data that must exist in the database - this data is created and
  * torn down before/after each test case.
  */
-public class HelloWorldServiceIntegrationTest extends BaseTest {
+public class HelloWorldServiceIntegrationTest {
 
   private static final Logger log = LoggerFactory.getLogger(HelloWorldServiceIntegrationTest.class);
 

@@ -1,8 +1,6 @@
 package com.dw.test.base;
 
-import com.standard.dev.test.base.BaseTest;
 import com.dw.test.rules.JdbiTestResourceRule;
-
 import org.junit.Rule;
 
 /**
@@ -12,9 +10,8 @@ import org.junit.Rule;
  *
  *    jdbiResource.getHandle();
  *
- * Created by craiskin on 7/7/2015.
  */
-public class BasePersistenceTest extends BaseTest {
+public class BasePersistenceTest{
   @Rule
   public JdbiTestResourceRule jdbiResource = new JdbiTestResourceRule();
 }
