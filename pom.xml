@@ -101,6 +101,11 @@
             <version>${stringtemplate.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
 
         <!-- Test dependencies -->
 
@@ -111,12 +116,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>${flyway.version}</version>
-            <scope>test</scope>
-        </dependency>
 
 	</dependencies>
 

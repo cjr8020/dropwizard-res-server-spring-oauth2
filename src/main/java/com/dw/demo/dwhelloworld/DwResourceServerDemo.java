@@ -1,10 +1,13 @@
 package com.dw.demo.dwhelloworld;
 
+import com.codahale.metrics.MetricRegistry;
 import com.dw.demo.audit.RequestAuditLogFeature;
 import com.dw.demo.dwhelloworld.resources.HelloWorldResource;
 import com.dw.demo.dwhelloworld.resources.VersionResource;
 
+import io.dropwizard.db.DataSourceFactory;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.flywaydb.core.Flyway;
 import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,7 +74,19 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
     // add URL mapping
     cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 
+    /*
+     * Run Flyway migration
+     */
+    DataSourceFactory dataSourceFactory = new DataSourceFactory();
+    dataSourceFactory.setDriverClass("org.h2.Driver");
+    dataSourceFactory.setUrl("jdbc:h2:mem:DEMO_DB;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;");
+    dataSourceFactory.setUser("sa");
+    dataSourceFactory.setPassword("");
 
+    Flyway flyway = new Flyway();
+    flyway.setDataSource(dataSourceFactory.build(new MetricRegistry(), "test-datasource"));
+    flyway.setSchemas("jdbc:h2:mem:DEMO_DB;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;");
+    flyway.migrate();
 
     /*
      * JDBI for persistence

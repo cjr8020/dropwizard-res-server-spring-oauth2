@@ -2,6 +2,7 @@
 logs/
 *.h2.db
 *.lock.db
+*.trace.db
 #test.properties
 
 ### Java
