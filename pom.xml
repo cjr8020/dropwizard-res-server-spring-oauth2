@@ -271,7 +271,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.dw.demo.dwhelloworld.HelloWorldService</mainClass>
+                                    <mainClass>com.dw.demo.dwhelloworld.DwResourceServerDemo</mainClass>
                                 </transformer>
 
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
@@ -287,18 +287,5 @@
 		</plugins>
 	
 	</build>
-	
-    <distributionManagement>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>Internal Snapshots</name>
-            <url>https://nexus.standard.com:8443/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>nexus-releases</id>
-            <name>Internal Releases</name>
-            <url>https://nexus.standard.com:8443/nexus/content/repositories/releases/</url>
-        </repository>
-    </distributionManagement>	
 	
 </project>

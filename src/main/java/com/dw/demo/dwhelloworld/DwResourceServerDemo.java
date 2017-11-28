@@ -22,14 +22,14 @@ import io.dropwizard.setup.Environment;
 /**
  * Class containing the main method for the Service/Application
  */
-public class HelloWorldService extends Application<HelloWorldServiceConfiguration> {
+public class DwResourceServerDemo extends Application<DwResourceServerDemoConfiguration> {
 
-  private static final Logger log = LoggerFactory.getLogger(HelloWorldService.class);
+  private static final Logger log = LoggerFactory.getLogger(DwResourceServerDemo.class);
 
   private static final String APPLICATION_NAME = "dropwizard-hello-world";
 
   public static void main(String[] args) throws Exception {
-    new HelloWorldService().run(args);
+    new DwResourceServerDemo().run(args);
   }
 
   @Override
@@ -43,7 +43,7 @@ public class HelloWorldService extends Application<HelloWorldServiceConfiguratio
    * @param bootstrap The pre-start application environment, containing everything required to bootstrap a DW  command
    */
   @Override
-  public void initialize(Bootstrap<HelloWorldServiceConfiguration> bootstrap) {
+  public void initialize(Bootstrap<DwResourceServerDemoConfiguration> bootstrap) {
   }
 
   /**
@@ -54,7 +54,7 @@ public class HelloWorldService extends Application<HelloWorldServiceConfiguratio
    * @throws Exception runtime exception
    */
   @Override
-  public void run(HelloWorldServiceConfiguration configuration, Environment environment)
+  public void run(DwResourceServerDemoConfiguration configuration, Environment environment)
       throws Exception {
 
     // add log audit feature

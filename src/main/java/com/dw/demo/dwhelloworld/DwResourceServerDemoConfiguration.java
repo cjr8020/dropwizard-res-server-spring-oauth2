@@ -16,7 +16,7 @@ import io.dropwizard.db.DataSourceFactory;
  * Service configuration class.
  * It assembles all externalized environment specific parameters from the single service config file - config.yml
  */
-class HelloWorldServiceConfiguration extends Configuration {
+class DwResourceServerDemoConfiguration extends Configuration {
 
   @NotEmpty
   private String greeting = "Hello World";

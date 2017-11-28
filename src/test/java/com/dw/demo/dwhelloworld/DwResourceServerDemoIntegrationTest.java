@@ -1,5 +1,7 @@
 package com.dw.demo.dwhelloworld;
 
+import com.dw.test.base.BaseTest;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -22,22 +24,22 @@ import org.slf4j.LoggerFactory;
  * NOTE: some test cases rely on data that must exist in the database - this data is created and
  * torn down before/after each test case.
  */
-public class HelloWorldServiceIntegrationTest {
+public class DwResourceServerDemoIntegrationTest extends BaseTest {
 
-  private static final Logger log = LoggerFactory.getLogger(HelloWorldServiceIntegrationTest.class);
+  private static final Logger log = LoggerFactory.getLogger(DwResourceServerDemoIntegrationTest.class);
 
   /*
    * database.url defined in this file must match the one defined in test.properties for this module
    */
-  private static final String CONFIG_PATH = ResourceHelpers.resourceFilePath("config/HelloWorldServiceIntegrationTest-config.yml");
+  private static final String CONFIG_PATH = ResourceHelpers.resourceFilePath("config/DwResourceServerDemoIntegrationTest-config.yml");
 
   /* service client */
   private static Client client = null;
 
   /* creates our member-update service instance */
   @ClassRule
-  public static final DropwizardAppRule<HelloWorldServiceConfiguration>
-      DW_RULE = new DropwizardAppRule<>(HelloWorldService.class, CONFIG_PATH);
+  public static final DropwizardAppRule<DwResourceServerDemoConfiguration>
+      DW_RULE = new DropwizardAppRule<>(DwResourceServerDemo.class, CONFIG_PATH);
 
 
   @Before

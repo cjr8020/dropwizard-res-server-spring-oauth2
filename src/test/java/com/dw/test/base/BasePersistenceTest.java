@@ -11,7 +11,7 @@ import org.junit.Rule;
  *    jdbiResource.getHandle();
  *
  */
-public class BasePersistenceTest{
+public class BasePersistenceTest extends BaseTest {
   @Rule
   public JdbiTestResourceRule jdbiResource = new JdbiTestResourceRule();
 }
