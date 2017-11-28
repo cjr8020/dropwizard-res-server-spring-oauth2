@@ -1,0 +1,52 @@
+{
+	"info": {
+		"name": "dropwizard-resource-server-spring-oauth2",
+		"_postman_id": "7e22daaf-e6bb-cc0d-0457-ef1d5d7dd07c",
+		"description": "dropwizard hello world service protected with spring oauth2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:9009/hello-world",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9009/hello-world",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9009",
+					"path": [
+						"hello-world"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9009/hello-world-admin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9009/hello-world-admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9009",
+					"path": [
+						"hello-world-admin"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

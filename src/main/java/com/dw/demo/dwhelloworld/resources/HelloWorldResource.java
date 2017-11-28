@@ -83,10 +83,10 @@ public class HelloWorldResource {
     return response;
   }
 
-  @Path("hello-world-caps")
+  @Path("hello-world-admin")
   @GET
   @Audited
-  public Response sayHelloInCaps() {
+  public Response sayHelloInAdmin() {
 
     final String transactionId = "some-trans-id";
     final String loggedInUser = "test-user";

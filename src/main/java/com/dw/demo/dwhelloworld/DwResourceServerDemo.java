@@ -85,7 +85,7 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
 
     Flyway flyway = new Flyway();
     flyway.setDataSource(dataSourceFactory.build(new MetricRegistry(), "test-datasource"));
-    flyway.setSchemas("jdbc:h2:mem:DEMO_DB;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;");
+    flyway.setSchemas("DEMO");
     flyway.migrate();
 
     /*
