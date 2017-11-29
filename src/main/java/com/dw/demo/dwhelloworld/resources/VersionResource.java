@@ -14,16 +14,22 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * This resource reports version and build timestamp for this service/application
+ * This resource reports version and build timestamp for this service/application.
  */
 @Path("/version")
 public class VersionResource {
 
+  /**
+   * version info resource.
+   * @return String
+   * @throws IOException
+   */
   @GET
   @Produces({MediaType.APPLICATION_JSON})
   public Response returnVersionInfo() throws IOException {
     final String versionInfo;
-    try (InputStream versionData = getClass().getClassLoader().getResourceAsStream("version.json")) {
+    try (InputStream versionData = getClass().getClassLoader()
+        .getResourceAsStream("version.json")) {
       versionInfo = CharStreams.toString(new InputStreamReader(versionData, Charsets.UTF_8));
     }
     return Response.ok(versionInfo, MediaType.APPLICATION_JSON).build();

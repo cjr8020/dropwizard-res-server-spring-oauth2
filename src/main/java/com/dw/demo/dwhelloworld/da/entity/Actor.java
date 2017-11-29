@@ -5,7 +5,7 @@ import com.google.common.base.MoreObjects;
 import java.time.LocalDateTime;
 
 /**
- * Actor entity - represents application user entity as it is persisted in the DB
+ * Actor entity - represents application user entity as it is persisted in the DB.
  */
 public class Actor {
 
@@ -20,7 +20,8 @@ public class Actor {
   private String updatedBy;
   private LocalDateTime updatedTimestamp;
 
-  public Actor() {}
+  public Actor() {
+  }
 
   public Actor(
       final String username,

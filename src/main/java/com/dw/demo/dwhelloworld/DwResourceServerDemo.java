@@ -5,6 +5,7 @@ import com.dw.demo.audit.RequestAuditLogFeature;
 import com.dw.demo.dwhelloworld.resources.HelloWorldResource;
 import com.dw.demo.dwhelloworld.resources.VersionResource;
 
+import com.dw.demo.spring.SpringContextLoaderListener;
 import io.dropwizard.db.DataSourceFactory;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.flywaydb.core.Flyway;
@@ -21,6 +22,9 @@ import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 /**
  * Class containing the main method for the Service/Application
@@ -41,18 +45,22 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
   }
 
   /**
-   * Dropwizard Application class' initialize method is where you enable capabilities
-   * beyond those provided in the dropwizard core module.
-   * @param bootstrap The pre-start application environment, containing everything required to bootstrap a DW  command
+   * Dropwizard Application class' initialize method is where you enable capabilities beyond those
+   * provided in the dropwizard core module.
+   *
+   * @param bootstrap The pre-start application environment, containing everything required to
+   * bootstrap a DW  command
    */
   @Override
   public void initialize(Bootstrap<DwResourceServerDemoConfiguration> bootstrap) {
   }
 
   /**
-   * The run() method is where you create instances of your REST resources, HealthChecks,
-   * providers, tasks, and anything else you need to make your service functional.
-   * @param configuration the DW configuration defaults + what you declared in your service config file
+   * The run() method is where you create instances of your REST resources, HealthChecks, providers,
+   * tasks, and anything else you need to make your service functional.
+   *
+   * @param configuration the DW configuration defaults + what you declared in your service config
+   * file
    * @param environment the DW service operating environment container
    * @throws Exception runtime exception
    */
@@ -60,17 +68,47 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
   public void run(DwResourceServerDemoConfiguration configuration, Environment environment)
       throws Exception {
 
+    /*
+     * Create Spring context
+     */
+    AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+    AnnotationConfigWebApplicationContext parent = new AnnotationConfigWebApplicationContext();
+
+    parent.refresh();
+    parent.registerShutdownHook();
+    parent.start();
+    ConfigurableListableBeanFactory beanFactory = parent.getBeanFactory();
+    beanFactory.registerSingleton(configuration.getClass().getCanonicalName(), configuration);
+
+    ctx.setParent(parent);
+    ctx.register(DwResourceServerDemoConfiguration.class);
+
+    ctx.scan("com.dw.demo.spring");
+    ctx.scan("com.dw.demo.dwhelloworld.resources");
+
+    ctx.refresh();
+    ctx.registerShutdownHook();
+    ctx.start();
+
+    environment.servlets().addServletListeners(new SpringContextLoaderListener(ctx));
+    FilterRegistration.Dynamic filterRegistration = environment.servlets().addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
+    filterRegistration.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
+
+
     // add log audit feature
     environment.jersey().register(RequestAuditLogFeature.class);
 
     /*
      * Enable CORS headers
      */
-    final FilterRegistration.Dynamic cors = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+    final FilterRegistration.Dynamic cors = environment.servlets()
+        .addFilter("CORS", CrossOriginFilter.class);
     // configure CORS parameters
     cors.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
-    cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "X-Requested-With,Content-Type,Accept,Origin");
-    cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+    cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM,
+        "X-Requested-With,Content-Type,Accept,Origin");
+    cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM,
+        "OPTIONS,GET,PUT,POST,DELETE,HEAD");
     // add URL mapping
     cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 
@@ -79,7 +117,8 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
      */
     DataSourceFactory dataSourceFactory = new DataSourceFactory();
     dataSourceFactory.setDriverClass("org.h2.Driver");
-    dataSourceFactory.setUrl("jdbc:h2:mem:DEMO_DB;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;");
+    dataSourceFactory.setUrl(
+        "jdbc:h2:mem:DEMO_DB;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;");
     dataSourceFactory.setUser("sa");
     dataSourceFactory.setPassword("");
 
@@ -95,7 +134,8 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
      *  - a healthcheck for connectivity to the database
      */
     final DBIFactory dwxFactory = new DBIFactory();
-    final DBI demoDbDbi = dwxFactory.build(environment, configuration.getDataSourceFactory(), "DEMO_DB");
+    final DBI demoDbDbi = dwxFactory
+        .build(environment, configuration.getDataSourceFactory(), "DEMO_DB");
 
     /* **************************
      * Register REST resources

@@ -1,35 +1,33 @@
 package com.dw.demo.dwhelloworld.resources;
 
-import com.google.common.base.Preconditions;
-import com.google.common.base.Stopwatch;
+import static com.dw.demo.dwhelloworld.PvConstants.CUSTOM_HTTP_HEADER_ACTOR_ID;
+import static com.dw.demo.dwhelloworld.PvConstants.CUSTOM_HTTP_HEADER_TRANSACTION_ID;
 
 import com.dw.demo.audit.Audited;
 import com.dw.demo.dwhelloworld.context.ExecutionContext;
 import com.dw.demo.dwhelloworld.da.HelloWorldDataRepository;
 import com.dw.demo.dwhelloworld.da.entity.Actor;
 import com.dw.demo.dwhelloworld.representation.Greeting;
-
-import org.skife.jdbi.v2.DBI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.common.base.Preconditions;
+import com.google.common.base.Stopwatch;
 import java.util.concurrent.TimeUnit;
-
-import javax.annotation.security.PermitAll;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import static com.dw.demo.dwhelloworld.PvConstants.CUSTOM_HTTP_HEADER_ACTOR_ID;
-import static com.dw.demo.dwhelloworld.PvConstants.CUSTOM_HTTP_HEADER_TRANSACTION_ID;
+import org.skife.jdbi.v2.DBI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Component;
 
 /**
- * Hello World Resource class - exposes hello world resources
- * Note: @Path required on resource class with Jersey 2.5.x
+ * Hello World Resource class - exposes hello world resources Note: @Path required on resource class
+ * with Jersey 2.5.x
  */
+@Component
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class HelloWorldResource {
@@ -50,6 +48,7 @@ public class HelloWorldResource {
   @Path("hello-world")
   @GET
   @Audited
+  @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
   public Response sayHello() {
 
     final String transactionId = "some-trans-id";
@@ -59,11 +58,15 @@ public class HelloWorldResource {
     Response response;
 
     try {
-      ExecutionContext executionContext = createAndValidateExecutionContext(transactionId, loggedInUser);
-      HelloWorldDataRepository dataRepository = new HelloWorldDataRepository(demoDbDbi, executionContext);
+      ExecutionContext executionContext = createAndValidateExecutionContext(transactionId,
+          loggedInUser);
+      HelloWorldDataRepository dataRepository = new HelloWorldDataRepository(demoDbDbi,
+          executionContext);
       Actor actor = dataRepository.updateActorDetails(loggedInUser);
-      Greeting greeting = new Greeting(greetingMessage, actor.getUsername(), actor.getResourcesRequested());
-      GenericEntity<Greeting> responseEntity = new GenericEntity<Greeting>(greeting) {};
+      Greeting greeting = new Greeting(greetingMessage, actor.getUsername(),
+          actor.getResourcesRequested());
+      GenericEntity<Greeting> responseEntity = new GenericEntity<Greeting>(greeting) {
+      };
       response = Response.ok(responseEntity).build();
     } catch (Throwable throwable) {
       log.error(
@@ -86,6 +89,7 @@ public class HelloWorldResource {
   @Path("hello-world-admin")
   @GET
   @Audited
+  @PreAuthorize("hasAuthority('ADMIN_USER')")
   public Response sayHelloInAdmin() {
 
     final String transactionId = "some-trans-id";
@@ -95,11 +99,15 @@ public class HelloWorldResource {
     Response response;
 
     try {
-      ExecutionContext executionContext = createAndValidateExecutionContext(transactionId, loggedInUser);
-      HelloWorldDataRepository dataRepository = new HelloWorldDataRepository(demoDbDbi, executionContext);
+      ExecutionContext executionContext = createAndValidateExecutionContext(transactionId,
+          loggedInUser);
+      HelloWorldDataRepository dataRepository = new HelloWorldDataRepository(demoDbDbi,
+          executionContext);
       Actor actor = dataRepository.updateActorDetails(loggedInUser);
-      Greeting greeting = new Greeting(greetingMessage.toUpperCase(), actor.getUsername(), actor.getResourcesRequested());
-      GenericEntity<Greeting> responseEntity = new GenericEntity<Greeting>(greeting) {};
+      Greeting greeting = new Greeting(greetingMessage.toUpperCase(), actor.getUsername(),
+          actor.getResourcesRequested());
+      GenericEntity<Greeting> responseEntity = new GenericEntity<Greeting>(greeting) {
+      };
       response = Response.ok(responseEntity).build();
     } catch (Throwable throwable) {
       log.error(

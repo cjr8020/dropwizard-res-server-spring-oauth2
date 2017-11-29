@@ -9,8 +9,23 @@
 		{
 			"name": "http://localhost:9009/hello-world",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdC1vYXV0aDItcmVzb3VyY2VpZCJdLCJ1c2VyX25hbWUiOiJqb2huLmRvZSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsInRydXN0Il0sImV4cCI6MTUxMTkyNjc4NiwiYXV0aG9yaXRpZXMiOlsiU1RBTkRBUkRfVVNFUiJdLCJqdGkiOiI0ZWFlZmQ0NS01YTE4LTRlZjktOGQwNS1lNGZlN2Y2MTllMzQiLCJjbGllbnRfaWQiOiJ0ZXN0LXdlYi1jbGllbnRpZCJ9.a3b6h_H8nmzreBlshTjEWdMXFohV7bZXJfQSN2RP2UI",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
 				"body": {},
 				"url": {
 					"raw": "http://localhost:9009/hello-world",
@@ -30,8 +45,23 @@
 		{
 			"name": "http://localhost:9009/hello-world-admin",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdC1vYXV0aDItcmVzb3VyY2VpZCJdLCJ1c2VyX25hbWUiOiJqb2huLmRvZSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsInRydXN0Il0sImV4cCI6MTUxMTkyNjc4NiwiYXV0aG9yaXRpZXMiOlsiU1RBTkRBUkRfVVNFUiJdLCJqdGkiOiI0ZWFlZmQ0NS01YTE4LTRlZjktOGQwNS1lNGZlN2Y2MTllMzQiLCJjbGllbnRfaWQiOiJ0ZXN0LXdlYi1jbGllbnRpZCJ9.a3b6h_H8nmzreBlshTjEWdMXFohV7bZXJfQSN2RP2UI",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
 				"body": {},
 				"url": {
 					"raw": "http://localhost:9009/hello-world-admin",
@@ -42,6 +72,27 @@
 					"port": "9009",
 					"path": [
 						"hello-world-admin"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9009/version",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9009/version",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9009",
+					"path": [
+						"version"
 					]
 				},
 				"description": ""

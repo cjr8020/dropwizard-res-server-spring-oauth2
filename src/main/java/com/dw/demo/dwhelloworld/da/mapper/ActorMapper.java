@@ -14,7 +14,8 @@ import java.sql.SQLException;
 public class ActorMapper implements ResultSetMapper<Actor> {
 
   @Override
-  public Actor map(int index, ResultSet resultSet, StatementContext statementContext) throws SQLException {
+  public Actor map(int index, ResultSet resultSet, StatementContext statementContext)
+      throws SQLException {
 
     Actor actor = new Actor();
 
@@ -26,11 +27,13 @@ public class ActorMapper implements ResultSetMapper<Actor> {
 
     actor.setCreatedBy(resultSet.getString("CREATED_BY"));
     actor.setCreatedTimestamp(
-        resultSet.getTimestamp("CREATED_TIMESTAMP") == null ? null : resultSet.getTimestamp("CREATED_TIMESTAMP").toLocalDateTime()
+        resultSet.getTimestamp("CREATED_TIMESTAMP") == null ? null
+            : resultSet.getTimestamp("CREATED_TIMESTAMP").toLocalDateTime()
     );
     actor.setUpdatedBy(resultSet.getString("UPDATED_BY"));
     actor.setUpdatedTimestamp(
-        resultSet.getTimestamp("UPDATED_TIMESTAMP") == null ? null : resultSet.getTimestamp("UPDATED_TIMESTAMP").toLocalDateTime()
+        resultSet.getTimestamp("UPDATED_TIMESTAMP") == null ? null
+            : resultSet.getTimestamp("UPDATED_TIMESTAMP").toLocalDateTime()
     );
 
     return actor;

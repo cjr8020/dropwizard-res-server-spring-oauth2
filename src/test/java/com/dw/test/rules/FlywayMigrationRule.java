@@ -10,7 +10,8 @@ import java.util.Properties;
 import io.dropwizard.db.DataSourceFactory;
 
 /**
- * This org.junit.rules.ExternalResource rule invokes Flyway-managed database migration for your unit test.
+ * This org.junit.rules.ExternalResource rule invokes Flyway-managed database migration for your
+ * unit test.
  */
 public class FlywayMigrationRule extends ExternalResource {
 
