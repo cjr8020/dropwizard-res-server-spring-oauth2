@@ -47,7 +47,7 @@
     <dropwizard.version>0.9.2</dropwizard.version>
     <stringtemplate.version>3.2.1</stringtemplate.version>
 
-    <spring-core.version>4.3.12.RELEASE</spring-core.version>
+    <spring-core.version>4.3.13.RELEASE</spring-core.version>
     <spring-security.version>4.2.3.RELEASE</spring-security.version>
     <spring-security-oauth2.version>2.2.0.RELEASE</spring-security-oauth2.version>
     <spring-security-jwt.version>1.0.8.RELEASE</spring-security-jwt.version>

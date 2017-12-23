@@ -8,6 +8,7 @@ import com.dw.demo.dwhelloworld.context.ExecutionContext;
 import com.dw.demo.dwhelloworld.da.HelloWorldDataRepository;
 import com.dw.demo.dwhelloworld.da.entity.Actor;
 import com.dw.demo.dwhelloworld.representation.Greeting;
+import com.dw.demo.spring.JwtAuthenticationContextFactory.JwtAuthenticationContext;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Stopwatch;
 import java.util.concurrent.TimeUnit;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.Response;
 import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
@@ -27,12 +29,15 @@ import org.springframework.stereotype.Component;
  * Hello World Resource class - exposes hello world resources Note: @Path required on resource class
  * with Jersey 2.5.x
  */
-@Component
+//@Component
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class HelloWorldResource {
 
   private static final Logger log = LoggerFactory.getLogger(HelloWorldResource.class);
+
+  @Autowired
+  private JwtAuthenticationContext jwtAuthenticationContext;
 
   private final String greetingMessage;
   private final DBI demoDbDbi;
@@ -50,6 +55,15 @@ public class HelloWorldResource {
   @Audited
   @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
   public Response sayHello() {
+
+    log.info(" ----- sayHello() ----- ");
+    log.info("JWT username: {}", jwtAuthenticationContext.getUsername());
+    log.info("JWT audience: {}", jwtAuthenticationContext.getAudience());
+    log.info("JWT scopes: {}", jwtAuthenticationContext.getScopes());
+    log.info("JWT expires: {}", jwtAuthenticationContext.getExpriresTimestamp());
+    log.info("JWT authorities: {}", jwtAuthenticationContext.getAuthorities());
+    log.info("JWT JTI: {}", jwtAuthenticationContext.getJti());
+    log.info("JWT client ID: {}", jwtAuthenticationContext.getClientId());
 
     final String transactionId = "some-trans-id";
     final String loggedInUser = "test-user";
@@ -91,6 +105,15 @@ public class HelloWorldResource {
   @Audited
   @PreAuthorize("hasAuthority('ADMIN_USER')")
   public Response sayHelloInAdmin() {
+
+    log.info(" ----- sayHelloInAdmin() ----- ");
+    log.info("JWT username: {}", jwtAuthenticationContext.getUsername());
+    log.info("JWT audience: {}", jwtAuthenticationContext.getAudience());
+    log.info("JWT scopes: {}", jwtAuthenticationContext.getScopes());
+    log.info("JWT expires: {}", jwtAuthenticationContext.getExpriresTimestamp());
+    log.info("JWT authorities: {}", jwtAuthenticationContext.getAuthorities());
+    log.info("JWT JTI: {}", jwtAuthenticationContext.getJti());
+    log.info("JWT client ID: {}", jwtAuthenticationContext.getClientId());
 
     final String transactionId = "some-trans-id";
     final String loggedInUser = "test-user";
