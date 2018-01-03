@@ -22,6 +22,7 @@ import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Component;
  * Hello World Resource class - exposes hello world resources Note: @Path required on resource class
  * with Jersey 2.5.x
  */
-//@Component
+@Component
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class HelloWorldResource {
@@ -42,8 +43,9 @@ public class HelloWorldResource {
   private final String greetingMessage;
   private final DBI demoDbDbi;
 
+  @Autowired
   public HelloWorldResource(
-      final String greetingMessage,
+      @Qualifier("greeting") final String greetingMessage,
       final DBI demoDbDbi
   ) {
     this.greetingMessage = greetingMessage;

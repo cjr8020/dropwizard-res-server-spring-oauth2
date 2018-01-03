@@ -1,5 +1,6 @@
 package com.dw.demo.dwhelloworld;
 
+import com.dw.demo.dwhelloworld.configuration.DwResourceServerDemoConfiguration;
 import com.dw.test.base.BaseTest;
 
 import static org.hamcrest.CoreMatchers.equalTo;

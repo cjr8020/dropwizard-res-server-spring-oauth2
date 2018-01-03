@@ -2,6 +2,7 @@ package com.dw.demo.dwhelloworld;
 
 import com.codahale.metrics.MetricRegistry;
 import com.dw.demo.audit.RequestAuditLogFeature;
+import com.dw.demo.dwhelloworld.configuration.DwResourceServerDemoConfiguration;
 import com.dw.demo.dwhelloworld.resources.HelloWorldResource;
 import com.dw.demo.dwhelloworld.resources.VersionResource;
 
