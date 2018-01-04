@@ -126,6 +126,11 @@
       <artifactId>spring-web</artifactId>
       <version>${spring-core.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+      <version>1.5.9.RELEASE</version>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework.security</groupId>

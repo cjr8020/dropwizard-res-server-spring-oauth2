@@ -8,9 +8,9 @@ import com.dw.demo.dwhelloworld.context.ExecutionContext;
 import com.dw.demo.dwhelloworld.da.HelloWorldDataRepository;
 import com.dw.demo.dwhelloworld.da.entity.Actor;
 import com.dw.demo.dwhelloworld.representation.Greeting;
-import com.dw.demo.dwhelloworld.security.JwtAuthenticationContextFactory.JwtAuthenticationContext;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Stopwatch;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -24,6 +24,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,8 +40,8 @@ public class HelloWorldResource {
 
   private static final Logger log = LoggerFactory.getLogger(HelloWorldResource.class);
 
-  @Autowired
-  private JwtAuthenticationContext jwtAuthenticationContext;
+//  @Autowired
+//  private JwtAuthenticationContext jwtAuthenticationContext;
 
   private final String greetingMessage;
   private final DBI demoDbDbi;
@@ -59,13 +62,27 @@ public class HelloWorldResource {
   public Response sayHello() {
 
     log.info(" ----- sayHello() ----- ");
-    log.info("JWT username: {}", jwtAuthenticationContext.getUsername());
-    log.info("JWT audience: {}", jwtAuthenticationContext.getAudience());
-    log.info("JWT scopes: {}", jwtAuthenticationContext.getScopes());
-    log.info("JWT expires: {}", jwtAuthenticationContext.getExpriresTimestamp());
-    log.info("JWT authorities: {}", jwtAuthenticationContext.getAuthorities());
-    log.info("JWT JTI: {}", jwtAuthenticationContext.getJti());
-    log.info("JWT client ID: {}", jwtAuthenticationContext.getClientId());
+
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    log.info("authentication: {}", authentication);
+    Object details = authentication.getDetails();
+    log.info("details: {}", details);
+
+    if ( details instanceof OAuth2AuthenticationDetails ){
+      OAuth2AuthenticationDetails oAuth2AuthenticationDetails = (OAuth2AuthenticationDetails)details;
+      log.info("oAuth2AuthenticationDetails: {}", oAuth2AuthenticationDetails);
+      Map<String, Object> decodedDetails = (Map<String, Object>)oAuth2AuthenticationDetails.getDecodedDetails();
+      log.info("decodedDetails: {}", decodedDetails);
+      log.info( "JWT username: {}: ", decodedDetails.get("user_name") );
+    }
+
+//    log.info("JWT username: {}", jwtAuthenticationContext.getUsername());
+//    log.info("JWT audience: {}", jwtAuthenticationContext.getAudience());
+//    log.info("JWT scopes: {}", jwtAuthenticationContext.getScopes());
+//    log.info("JWT expires: {}", jwtAuthenticationContext.getExpriresTimestamp());
+//    log.info("JWT authorities: {}", jwtAuthenticationContext.getAuthorities());
+//    log.info("JWT JTI: {}", jwtAuthenticationContext.getJti());
+//    log.info("JWT client ID: {}", jwtAuthenticationContext.getClientId());
 
     final String transactionId = "some-trans-id";
     final String loggedInUser = "test-user";
@@ -109,13 +126,13 @@ public class HelloWorldResource {
   public Response sayHelloInAdmin() {
 
     log.info(" ----- sayHelloInAdmin() ----- ");
-    log.info("JWT username: {}", jwtAuthenticationContext.getUsername());
-    log.info("JWT audience: {}", jwtAuthenticationContext.getAudience());
-    log.info("JWT scopes: {}", jwtAuthenticationContext.getScopes());
-    log.info("JWT expires: {}", jwtAuthenticationContext.getExpriresTimestamp());
-    log.info("JWT authorities: {}", jwtAuthenticationContext.getAuthorities());
-    log.info("JWT JTI: {}", jwtAuthenticationContext.getJti());
-    log.info("JWT client ID: {}", jwtAuthenticationContext.getClientId());
+//    log.info("JWT username: {}", jwtAuthenticationContext.getUsername());
+//    log.info("JWT audience: {}", jwtAuthenticationContext.getAudience());
+//    log.info("JWT scopes: {}", jwtAuthenticationContext.getScopes());
+//    log.info("JWT expires: {}", jwtAuthenticationContext.getExpriresTimestamp());
+//    log.info("JWT authorities: {}", jwtAuthenticationContext.getAuthorities());
+//    log.info("JWT JTI: {}", jwtAuthenticationContext.getJti());
+//    log.info("JWT client ID: {}", jwtAuthenticationContext.getClientId());
 
     final String transactionId = "some-trans-id";
     final String loggedInUser = "test-user";
