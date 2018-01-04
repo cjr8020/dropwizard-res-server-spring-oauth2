@@ -1,4 +1,4 @@
-package com.dw.demo.spring;
+package com.dw.demo.dwhelloworld.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

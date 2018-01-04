@@ -1,4 +1,4 @@
-package com.dw.demo.dwhelloworld.configuration;
+package com.dw.demo.dwhelloworld;
 
 import com.google.common.base.MoreObjects;
 

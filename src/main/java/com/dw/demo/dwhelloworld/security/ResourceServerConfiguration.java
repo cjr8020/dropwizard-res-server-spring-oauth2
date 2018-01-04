@@ -1,4 +1,4 @@
-package com.dw.demo.spring;
+package com.dw.demo.dwhelloworld.security;
 
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;

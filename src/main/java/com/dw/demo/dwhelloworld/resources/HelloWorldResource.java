@@ -8,7 +8,7 @@ import com.dw.demo.dwhelloworld.context.ExecutionContext;
 import com.dw.demo.dwhelloworld.da.HelloWorldDataRepository;
 import com.dw.demo.dwhelloworld.da.entity.Actor;
 import com.dw.demo.dwhelloworld.representation.Greeting;
-import com.dw.demo.spring.JwtAuthenticationContextFactory.JwtAuthenticationContext;
+import com.dw.demo.dwhelloworld.security.JwtAuthenticationContextFactory.JwtAuthenticationContext;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Stopwatch;
 import java.util.concurrent.TimeUnit;
@@ -24,13 +24,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * Hello World Resource class - exposes hello world resources Note: @Path required on resource class
  * with Jersey 2.5.x
  */
-@Component
+@Service
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class HelloWorldResource {
@@ -46,7 +46,7 @@ public class HelloWorldResource {
   @Autowired
   public HelloWorldResource(
       @Qualifier("greeting") final String greetingMessage,
-      final DBI demoDbDbi
+      @Qualifier("demoDbDbi") final DBI demoDbDbi
   ) {
     this.greetingMessage = greetingMessage;
     this.demoDbDbi = demoDbDbi;

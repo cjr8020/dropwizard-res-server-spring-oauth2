@@ -1,4 +1,4 @@
-package com.dw.demo.spring;
+package com.dw.demo.dwhelloworld.spring;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
