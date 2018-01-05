@@ -16,7 +16,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 
 @EnableResourceServer
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
@@ -33,19 +33,17 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
   public void configure(HttpSecurity http) throws Exception {
     http
         .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+          .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
-        .antMatchers("/version").permitAll()
+          .antMatchers("/version").permitAll()
         .and()
         .authorizeRequests()
-        .anyRequest().authenticated()
+          .anyRequest().authenticated()
         .and()
-        .httpBasic()
-        .and()
-        .csrf().disable()
-        .exceptionHandling()
-        .authenticationEntryPoint(
+          .csrf().disable()
+          .exceptionHandling()
+          .authenticationEntryPoint(
             (request, response, exception) -> response
                 .sendError(HttpServletResponse.SC_UNAUTHORIZED)
         )
