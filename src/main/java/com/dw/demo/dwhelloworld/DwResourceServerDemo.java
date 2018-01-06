@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.ws.rs.Path;
+import javax.ws.rs.ext.Provider;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.flywaydb.core.Flyway;
 import org.skife.jdbi.v2.DBI;
@@ -149,6 +150,12 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
     //resources
     Map<String, Object> resources = ctx.getBeansWithAnnotation(Path.class);
     for (Map.Entry<String, Object> entry : resources.entrySet()) {
+      environment.jersey().register(entry.getValue());
+    }
+
+    //JAX-RS providers (classes annotated with @javax.ws.rs.ext.Provider)
+    Map<String, Object> providers = ctx.getBeansWithAnnotation(Provider.class);
+    for(Map.Entry<String,Object> entry : providers.entrySet()) {
       environment.jersey().register(entry.getValue());
     }
 
