@@ -1,4 +1,4 @@
-package com.dw.demo.spring;
+package com.dw.demo.dwhelloworld.security;
 
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +10,17 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 
 @EnableResourceServer
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
@@ -41,11 +45,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         .authorizeRequests()
         .anyRequest().authenticated()
         .and()
-        .httpBasic()
-        .and()
         .csrf().disable()
         .exceptionHandling()
-        .authenticationEntryPoint(
+          .authenticationEntryPoint(
             (request, response, exception) -> response
                 .sendError(HttpServletResponse.SC_UNAUTHORIZED)
         )

@@ -1,7 +1,7 @@
 {
 	"info": {
 		"name": "dropwizard-resource-server-spring-oauth2",
-		"_postman_id": "7e22daaf-e6bb-cc0d-0457-ef1d5d7dd07c",
+		"_postman_id": "a5f5ddef-6220-81d7-0141-d30096b4ba95",
 		"description": "dropwizard hello world service protected with spring oauth2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdC1vYXV0aDItcmVzb3VyY2VpZCJdLCJ1c2VyX25hbWUiOiJqb2huLmRvZSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsInRydXN0Il0sImV4cCI6MTUxMTkyNjc4NiwiYXV0aG9yaXRpZXMiOlsiU1RBTkRBUkRfVVNFUiJdLCJqdGkiOiI0ZWFlZmQ0NS01YTE4LTRlZjktOGQwNS1lNGZlN2Y2MTllMzQiLCJjbGllbnRfaWQiOiJ0ZXN0LXdlYi1jbGllbnRpZCJ9.a3b6h_H8nmzreBlshTjEWdMXFohV7bZXJfQSN2RP2UI",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdC1vYXV0aDItcmVzb3VyY2VpZCJdLCJ1c2VyX25hbWUiOiJqb2huLmRvZSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsInRydXN0Il0sImV4cCI6MTUxNTExNDE4MSwiYXV0aG9yaXRpZXMiOlsiU1RBTkRBUkRfVVNFUiJdLCJqdGkiOiIzNTZjZTRhNi1kM2UwLTQ1NTEtOWI1MC1hMzJhYmMxZTg2MzgiLCJjbGllbnRfaWQiOiJ0ZXN0LXdlYi1jbGllbnRpZCJ9.5xmD_jMiafwM1m_5UtmRzN3kMpOvQi2D0Tp5Da0FYB4",
 							"type": "string"
 						}
 					]
@@ -37,8 +37,7 @@
 					"path": [
 						"hello-world"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -50,7 +49,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdC1vYXV0aDItcmVzb3VyY2VpZCJdLCJ1c2VyX25hbWUiOiJqb2huLmRvZSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsInRydXN0Il0sImV4cCI6MTUxMTkyNjc4NiwiYXV0aG9yaXRpZXMiOlsiU1RBTkRBUkRfVVNFUiJdLCJqdGkiOiI0ZWFlZmQ0NS01YTE4LTRlZjktOGQwNS1lNGZlN2Y2MTllMzQiLCJjbGllbnRfaWQiOiJ0ZXN0LXdlYi1jbGllbnRpZCJ9.a3b6h_H8nmzreBlshTjEWdMXFohV7bZXJfQSN2RP2UI",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdC1vYXV0aDItcmVzb3VyY2VpZCJdLCJ1c2VyX25hbWUiOiJqb2huLmRvZSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsInRydXN0Il0sImV4cCI6MTUxNTIwODg5OCwiYXV0aG9yaXRpZXMiOlsiU1RBTkRBUkRfVVNFUiJdLCJqdGkiOiJiZDViYmNkNS1lYzVhLTQxMWItYmIyOS0yNDNmNWM1NGMwOTIiLCJjbGllbnRfaWQiOiJ0ZXN0LXdlYi1jbGllbnRpZCJ9.WI0CGj367tYLb3G8omuRz9na29KbnRIeIwi2t6Dfufk",
 							"type": "string"
 						}
 					]
@@ -73,8 +72,7 @@
 					"path": [
 						"hello-world-admin"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -83,7 +81,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://localhost:9009/version",
 					"protocol": "http",
@@ -93,6 +94,26 @@
 					"port": "9009",
 					"path": [
 						"version"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:10009/healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:10009/healthcheck",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10009",
+					"path": [
+						"healthcheck"
 					]
 				},
 				"description": ""

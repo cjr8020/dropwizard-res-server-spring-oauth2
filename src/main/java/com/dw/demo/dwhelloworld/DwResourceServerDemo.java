@@ -2,38 +2,40 @@ package com.dw.demo.dwhelloworld;
 
 import com.codahale.metrics.MetricRegistry;
 import com.dw.demo.audit.RequestAuditLogFeature;
-import com.dw.demo.dwhelloworld.resources.HelloWorldResource;
-import com.dw.demo.dwhelloworld.resources.VersionResource;
-
-import com.dw.demo.spring.SpringContextLoaderListener;
+import com.dw.demo.dwhelloworld.security.AdminConstraintSecurityHandler;
+import com.dw.demo.dwhelloworld.spring.SpringContextLoaderListener;
+import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.jdbi.DBIFactory;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+import java.util.EnumSet;
+import java.util.Map;
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import javax.ws.rs.Path;
+import javax.ws.rs.ext.Provider;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.flywaydb.core.Flyway;
 import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.EnumSet;
-
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
-
-import io.dropwizard.Application;
-import io.dropwizard.jdbi.DBIFactory;
-import io.dropwizard.setup.Bootstrap;
-import io.dropwizard.setup.Environment;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 /**
  * Class containing the main method for the Service/Application
  */
+@Configuration
 public class DwResourceServerDemo extends Application<DwResourceServerDemoConfiguration> {
 
   private static final Logger log = LoggerFactory.getLogger(DwResourceServerDemo.class);
 
   private static final String APPLICATION_NAME = "dropwizard-hello-world";
+
+  private DBI demoDbDbi;
 
   public static void main(String[] args) throws Exception {
     new DwResourceServerDemo().run(args);
@@ -69,6 +71,29 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
       throws Exception {
 
     /*
+     * Management endpoint security
+     */
+    if (configuration.getManagement().isSecurityEnabled()) {
+      environment.admin().setSecurityHandler(
+          new AdminConstraintSecurityHandler(
+            configuration.getManagement().getUsername(),
+            configuration.getManagement().getPassword()
+        )
+      );
+    }
+
+
+    /*
+     * JDBI for persistence
+     * This will automatically create
+     *  - managed connection pool to the database
+     *  - a healthcheck for connectivity to the database
+     */
+    final DBIFactory dwxFactory = new DBIFactory();
+    final DBI demoDbDbi = dwxFactory
+        .build(environment, configuration.getDataSourceFactory(), "DEMO_DB");
+
+    /*
      * Create Spring context
      */
     AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
@@ -79,21 +104,22 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
     parent.start();
     ConfigurableListableBeanFactory beanFactory = parent.getBeanFactory();
     beanFactory.registerSingleton(configuration.getClass().getCanonicalName(), configuration);
+    beanFactory.registerSingleton("demoDbDbi", demoDbDbi);
 
     ctx.setParent(parent);
-    ctx.register(DwResourceServerDemoConfiguration.class);
 
-    ctx.scan("com.dw.demo.spring");
-    ctx.scan("com.dw.demo.dwhelloworld.resources");
+//    ctx.scan("com.dw.demo.spring");
+//    ctx.scan("com.dw.demo.dwhelloworld.resources");
+    ctx.scan(this.getClass().getPackage().getName());
 
     ctx.refresh();
     ctx.registerShutdownHook();
     ctx.start();
 
     environment.servlets().addServletListeners(new SpringContextLoaderListener(ctx));
-    FilterRegistration.Dynamic filterRegistration = environment.servlets().addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
+    FilterRegistration.Dynamic filterRegistration = environment.servlets()
+        .addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
     filterRegistration.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
-
 
     // add log audit feature
     environment.jersey().register(RequestAuditLogFeature.class);
@@ -127,25 +153,23 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
     flyway.setSchemas("DEMO");
     flyway.migrate();
 
-    /*
-     * JDBI for persistence
-     * This will automatically create
-     *  - managed connection pool to the database
-     *  - a healthcheck for connectivity to the database
-     */
-    final DBIFactory dwxFactory = new DBIFactory();
-    final DBI demoDbDbi = dwxFactory
-        .build(environment, configuration.getDataSourceFactory(), "DEMO_DB");
+
 
     /* **************************
      * Register REST resources
      ***************************/
 
-    // Version resource
-    environment.jersey().register(new VersionResource());
+    //resources
+    Map<String, Object> resources = ctx.getBeansWithAnnotation(Path.class);
+    for (Map.Entry<String, Object> entry : resources.entrySet()) {
+      environment.jersey().register(entry.getValue());
+    }
 
-    // HelloWorld resource
-    environment.jersey().register(new HelloWorldResource(configuration.getGreeting(), demoDbDbi));
+    //JAX-RS providers (classes annotated with @javax.ws.rs.ext.Provider)
+    Map<String, Object> providers = ctx.getBeansWithAnnotation(Provider.class);
+    for(Map.Entry<String,Object> entry : providers.entrySet()) {
+      environment.jersey().register(entry.getValue());
+    }
 
   }
 }
