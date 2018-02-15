@@ -2,6 +2,8 @@ package com.dw.demo.dwhelloworld;
 
 import com.codahale.metrics.MetricRegistry;
 import com.dw.demo.audit.RequestAuditLogFeature;
+import com.dw.demo.dwhelloworld.config.ManagementConfiguration;
+import com.dw.demo.dwhelloworld.security.AdminConstraintSecurityHandler;
 import com.dw.demo.dwhelloworld.spring.SpringContextLoaderListener;
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
@@ -68,6 +70,19 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
   @Override
   public void run(DwResourceServerDemoConfiguration configuration, Environment environment)
       throws Exception {
+
+    /*
+     * Management endpoint security
+     */
+    if (configuration.getManagement().isSecurityEnabled()) {
+      environment.admin().setSecurityHandler(
+          new AdminConstraintSecurityHandler(
+            configuration.getManagement().getUsername(),
+            configuration.getManagement().getPassword()
+        )
+      );
+    }
+
 
     /*
      * JDBI for persistence

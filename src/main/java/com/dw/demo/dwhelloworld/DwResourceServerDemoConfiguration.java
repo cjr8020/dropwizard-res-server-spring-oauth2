@@ -1,5 +1,6 @@
 package com.dw.demo.dwhelloworld;
 
+import com.dw.demo.dwhelloworld.config.ManagementConfiguration;
 import com.google.common.base.MoreObjects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -45,11 +46,20 @@ public class DwResourceServerDemoConfiguration extends Configuration {
     return database;
   }
 
+  @Valid
+  @NotNull
+  @JsonProperty("management")
+  private ManagementConfiguration management;
+
+  public ManagementConfiguration getManagement() {
+    return management;
+  }
 
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
         .add("greeting", greeting)
+        .add("management", management)
         .toString();
   }
 }

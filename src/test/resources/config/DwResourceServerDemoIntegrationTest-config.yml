@@ -12,6 +12,15 @@ server:
     timeZone: UTC
     appenders: []
 
+# ---------------------------------------------
+# management endpoint configuration
+# ---------------------------------------------
+management:
+  securityEnabled: true
+  username: monitor
+  password: secret
+
+
 database:
   driverClass: org.h2.Driver
   user: sa

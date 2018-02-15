@@ -18,6 +18,13 @@ server:
         archivedFileCount: 5
         timeZone: UTC
 
+# ---------------------------------------------
+# management endpoint configuration
+# ---------------------------------------------
+management:
+  securityEnabled: false
+#  username: monitor
+#  password: secret
 
 database:
   driverClass: org.h2.Driver
