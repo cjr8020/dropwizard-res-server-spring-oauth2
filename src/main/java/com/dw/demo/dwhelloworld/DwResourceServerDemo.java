@@ -2,7 +2,6 @@ package com.dw.demo.dwhelloworld;
 
 import com.codahale.metrics.MetricRegistry;
 import com.dw.demo.audit.RequestAuditLogFeature;
-import com.dw.demo.dwhelloworld.config.ManagementConfiguration;
 import com.dw.demo.dwhelloworld.security.AdminConstraintSecurityHandler;
 import com.dw.demo.dwhelloworld.spring.SpringContextLoaderListener;
 import io.dropwizard.Application;
@@ -108,12 +107,10 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
     beanFactory.registerSingleton("demoDbDbi", demoDbDbi);
 
     ctx.setParent(parent);
-//    ctx.register(DwResourceServerDemoConfiguration.class);
-
-    ctx.scan(this.getClass().getPackage().getName());
 
 //    ctx.scan("com.dw.demo.spring");
 //    ctx.scan("com.dw.demo.dwhelloworld.resources");
+    ctx.scan(this.getClass().getPackage().getName());
 
     ctx.refresh();
     ctx.registerShutdownHook();
@@ -173,12 +170,6 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
     for(Map.Entry<String,Object> entry : providers.entrySet()) {
       environment.jersey().register(entry.getValue());
     }
-
-    // Version resource
-//    environment.jersey().register(new VersionResource());
-
-    // HelloWorld resource
-//    environment.jersey().register(new HelloWorldResource(configuration.getGreeting(), demoDbDbi));
 
   }
 }

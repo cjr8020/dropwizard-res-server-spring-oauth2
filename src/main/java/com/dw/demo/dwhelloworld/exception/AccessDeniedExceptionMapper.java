@@ -11,7 +11,11 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
 /**
- * TODO: class comment
+ * Spring's @PreAuthorize causes AccessDeniedException to be thrown which
+ * when unhandled causes server error 500.   This mapper causes 401 Unauthorized
+ * to be returned instead.
+ * The Component and Provider annotations ensure that Spring instantiates this class and
+ * registers with JAX-RS environment.
  */
 @Component
 @Provider

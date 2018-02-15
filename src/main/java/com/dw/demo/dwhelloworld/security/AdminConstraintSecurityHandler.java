@@ -11,7 +11,8 @@ import org.eclipse.jetty.util.security.Password;
 
 
 /**
- * Jetty servlet security handler.
+ * Jetty servlet security handler to implement management endpoint security.
+ * It is initialized with 'monitor' user credentials provided via configuration.
  */
 public class AdminConstraintSecurityHandler extends ConstraintSecurityHandler {
 
@@ -32,13 +33,13 @@ public class AdminConstraintSecurityHandler extends ConstraintSecurityHandler {
 
 class AdminMappedLoginService extends MappedLoginService {
 
-  public AdminMappedLoginService(final String userName, final String password, final String role) {
+  AdminMappedLoginService(final String userName, final String password, final String role) {
     putUser(userName, new Password(password), new String[]{role});
   }
 
   @Override
   public String getName() {
-    return "Hello";
+    return "Admin endpoint login service";
   }
 
   @Override
