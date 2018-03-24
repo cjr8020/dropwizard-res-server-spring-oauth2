@@ -1,6 +1,6 @@
 # dropwizard-hello-world
 
-sample Dropwizard v.0.9.2 based REST service supporting deployment and infrastructure services testing
+sample Dropwizard v.0.9.2 based REST service 
 
 
 ## hello-world resource
@@ -8,7 +8,7 @@ sample Dropwizard v.0.9.2 based REST service supporting deployment and infrastru
 resource URI:
 
 ```
-https://intportalweb.standard.com/dw-test-app/hello-world
+https://localhost/hello-world
 ```
 
 The service will respond with `Hello World` as well as the authenticated userid and the number of times this accessed the resources at this endpoint. 
@@ -24,7 +24,7 @@ Content-Length: 71
 
 {
    "message": "Hello World",
-   "username": "soapui-test",
+   "username": "blah-one",
    "resourceRequests": 5
 }
 ```
@@ -34,7 +34,7 @@ Content-Length: 71
 resource URI:
 
 ```
-https://intportalweb.standard.com/dw-test-app/hello-world-caps
+https://localhost/hello-world-caps
 ```
 
 The service will respond with `HELLO WORLD` as well as the authenticated userid and the number of times this accessed the resources at this endpoint. 
@@ -50,7 +50,7 @@ Content-Length: 71
 
 {
    "message": "HELLO WORLD",
-   "username": "soapui-test",
+   "username": "blah-two",
    "resourceRequests": 4
 }
 ```
