@@ -40,8 +40,6 @@ public class HelloWorldResource {
 
   private static final Logger log = LoggerFactory.getLogger(HelloWorldResource.class);
 
-//  @Autowired
-//  private JwtAuthenticationContext jwtAuthenticationContext;
 
   private final String greetingMessage;
   private final DBI demoDbDbi;

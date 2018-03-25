@@ -68,8 +68,7 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
    * @throws Exception runtime exception
    */
   @Override
-  public void run(DwResourceServerDemoConfiguration configuration, Environment environment)
-      throws Exception {
+  public void run(DwResourceServerDemoConfiguration configuration, Environment environment) {
 
     /*
      * Enable CORS headers
