@@ -21,6 +21,9 @@ server:
         timeZone: UTC
 
 
+oauth:
+  signingKey: MaYzkSjmkzPC57L
+
 database:
   driverClass: org.h2.Driver
   user: sa

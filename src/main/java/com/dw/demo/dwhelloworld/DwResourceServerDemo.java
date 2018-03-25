@@ -57,6 +57,7 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
   public void initialize(Bootstrap<DwResourceServerDemoConfiguration> bootstrap) {
   }
 
+
   /**
    * The run() method is where you create instances of your REST resources, HealthChecks, providers,
    * tasks, and anything else you need to make your service functional.
@@ -69,6 +70,21 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
   @Override
   public void run(DwResourceServerDemoConfiguration configuration, Environment environment)
       throws Exception {
+
+    /*
+     * Enable CORS headers
+     */
+    final FilterRegistration.Dynamic cors = environment.servlets()
+        .addFilter("CORS", CrossOriginFilter.class);
+    // configure CORS parameters
+    cors.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
+    cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM,
+                          "X-Requested-With,Content-Type,Accept,Origin");
+    cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM,
+                          "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+    // add URL mapping
+    cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+
 
     /*
      * Management endpoint security
@@ -107,6 +123,8 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
     beanFactory.registerSingleton("demoDbDbi", demoDbDbi);
 
     ctx.setParent(parent);
+    ctx.getEnvironment().getPropertySources().addLast(
+        configuration.getoAuthConfiguration().getOauthConfigurationPropertySource());
 
 //    ctx.scan("com.dw.demo.spring");
 //    ctx.scan("com.dw.demo.dwhelloworld.resources");
@@ -124,19 +142,7 @@ public class DwResourceServerDemo extends Application<DwResourceServerDemoConfig
     // add log audit feature
     environment.jersey().register(RequestAuditLogFeature.class);
 
-    /*
-     * Enable CORS headers
-     */
-    final FilterRegistration.Dynamic cors = environment.servlets()
-        .addFilter("CORS", CrossOriginFilter.class);
-    // configure CORS parameters
-    cors.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
-    cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM,
-        "X-Requested-With,Content-Type,Accept,Origin");
-    cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM,
-        "OPTIONS,GET,PUT,POST,DELETE,HEAD");
-    // add URL mapping
-    cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+
 
     /*
      * Run Flyway migration

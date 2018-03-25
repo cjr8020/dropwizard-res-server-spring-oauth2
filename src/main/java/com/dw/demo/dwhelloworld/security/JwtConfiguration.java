@@ -1,6 +1,8 @@
 package com.dw.demo.dwhelloworld.security;
 
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.JwtAccessTokenConverterConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,12 +17,13 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 public class JwtConfiguration {
 
-  private static final String SIGNING_KEY = "MaYzkSjmkzPC57L";
+  @Value("${oauth.signingKey}")
+  private String signingKey;
 
   @Bean
   public JwtAccessTokenConverter accessTokenConverter() {
     JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-    converter.setSigningKey(SIGNING_KEY);
+    converter.setSigningKey(signingKey);
     converter.setAccessTokenConverter(new JwtConfiguration.JwtConverter());
     return converter;
   }

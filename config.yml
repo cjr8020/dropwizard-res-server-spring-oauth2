@@ -42,6 +42,8 @@ database:
   minIdleTime: 1 minute
 
 
+oauth:
+  signingKey: MaYzkSjmkzPC57L
 
 
 #

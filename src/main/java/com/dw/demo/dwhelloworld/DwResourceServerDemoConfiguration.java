@@ -1,20 +1,19 @@
 package com.dw.demo.dwhelloworld;
 
-import com.dw.demo.dwhelloworld.config.ManagementConfiguration;
 import com.google.common.base.MoreObjects;
 
+import com.dw.demo.dwhelloworld.config.ManagementConfiguration;
+import com.dw.demo.dwhelloworld.security.OAuthConfiguration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.dropwizard.jdbi.DBIFactory;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.context.annotation.Bean;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
-import org.skife.jdbi.v2.DBI;
-import org.springframework.context.annotation.Bean;
 
 /**
  * Service configuration class.
@@ -39,6 +38,15 @@ public class DwResourceServerDemoConfiguration extends Configuration {
 
   @Valid
   @NotNull
+  @JsonProperty("oauth")
+  public OAuthConfiguration oAuthConfiguration;
+
+  public OAuthConfiguration getoAuthConfiguration() {
+    return oAuthConfiguration;
+  }
+
+  @Valid
+  @NotNull
   @JsonProperty("database")
   private DataSourceFactory database = new DataSourceFactory();
 
@@ -59,6 +67,8 @@ public class DwResourceServerDemoConfiguration extends Configuration {
   public String toString() {
     return MoreObjects.toStringHelper(this)
         .add("greeting", greeting)
+        .add("oauth", oAuthConfiguration)
+        .add("database", database)
         .add("management", management)
         .toString();
   }
